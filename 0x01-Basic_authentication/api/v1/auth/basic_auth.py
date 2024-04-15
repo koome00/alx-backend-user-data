@@ -18,5 +18,5 @@ class BasicAuth(Auth):
             return None
         if authorization_header.split()[0] != "Basic":
             return None
-        b_64 = authorization_header[len("Basic "):]
+        b_64 = authorization_header.split("Basic ", 1)[1]
         return b_64
