@@ -13,13 +13,13 @@ from typing import Optional
 
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth = None
-auth_type = os.getenv("AUTH_TYPE", None)
-if auth_type == 'auth':
+if os.getenv("AUTH_TYPE") == "auth":
     auth = Auth()
-if auth_type == "basic_auth":
+if os.getenv("AUTH_TYPE") == "basic_auth":
     auth = BasicAuth()
 
 
@@ -61,4 +61,4 @@ def filter_requests() -> Optional[str]:
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
     port = getenv("API_PORT", "5000")
-    app.run(host=host, port=port)
+    app.run(host=host, port=port, debug=True)
