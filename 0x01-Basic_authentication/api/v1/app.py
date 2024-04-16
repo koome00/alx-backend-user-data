@@ -9,6 +9,7 @@ from flask_cors import (CORS, cross_origin)
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
 import os
+from typing import Optional
 
 
 app = Flask(__name__)
@@ -46,7 +47,7 @@ def forbidden(error) -> str:
 
 
 @app.before_request
-def filter_requests():
+def filter_requests() -> Optional[str]:
     if auth:
         excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
                           '/api/v1/forbidden/']
