@@ -48,6 +48,9 @@ def forbidden(error) -> str:
 
 @app.before_request
 def filter_requests() -> Optional[str]:
+    """
+    filter requests before going to paths
+    """
     if auth:
         excluded_paths = ['/api/v1/status/', '/api/v1/unauthorized/',
                           '/api/v1/forbidden/']
