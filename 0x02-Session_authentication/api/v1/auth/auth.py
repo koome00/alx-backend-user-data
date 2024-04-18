@@ -41,4 +41,3 @@ class Auth:
         res = self.authorization_header(request)
         if res is None:
             return None
-        return res

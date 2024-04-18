@@ -73,7 +73,10 @@ class BasicAuth(Auth):
         if user_pwd is None or not isinstance(user_pwd, str):
             return None
         user_info = {"email": user_email}
-        user = User.search(user_info)
+        try:
+            user = User.search(user_info)
+        except Exception:
+            return None
         if len(user) == 0:
             return None
         else:
@@ -86,7 +89,7 @@ class BasicAuth(Auth):
         """
         Gets current user after overloading Auth
         """
-        auth_header = Auth.authorization_header(request)
+        auth_header = self.authorization_header(request)
         auth_b64 = self.extract_base64_authorization_header(auth_header)
         auth_str = self.decode_base64_authorization_header(auth_b64)
         email, passw = self.extract_user_credentials(auth_str)
