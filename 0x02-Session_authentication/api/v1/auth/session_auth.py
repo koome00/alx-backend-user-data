@@ -4,6 +4,7 @@ Module: Session Auth
 session authentiation
 """
 from api.v1.auth.auth import Auth
+from api.v1.views.users import User
 import uuid
 
 
@@ -34,3 +35,11 @@ class SessionAuth(Auth):
         if session_id is None or isinstance(session_id, str) is False:
             return None
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """
+        overloads current_user to return user based on cookie
+        """
+        session_id = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_id)
+        return User.get(user_id)
