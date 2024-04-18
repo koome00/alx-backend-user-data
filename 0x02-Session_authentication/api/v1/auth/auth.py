@@ -38,4 +38,7 @@ class Auth:
         """
         current user
         """
-        return request
+        res = self.authorization_header(request)
+        if res is None:
+            return None
+        return res
