@@ -4,7 +4,7 @@ Module Session Auth
 View that handles session auth routes
 """
 from api.v1.views import app_views
-from flask import jsonify, request
+from flask import jsonify, request, abort
 from models.user import User
 import os
 
@@ -35,3 +35,16 @@ def login():
             return jsonify({"error": "wrong password"}), 401
     else:
         return jsonify({"error": "no user found for this email"}), 401
+
+
+@app_views.route("/auth_session/logout", methods=["DELETE"],
+                 strict_slashes="False")
+def logout():
+    """
+    delete cookie and log out
+    """
+    from api.v1.app import auth
+    if auth.destroy_session(request):
+        return jsonify({}), 200
+    else:
+        return False, abort(404)
