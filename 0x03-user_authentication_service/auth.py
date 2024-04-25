@@ -21,10 +21,10 @@ def _hash_password(password: str) -> bytes:
 
 
 def _generate_uuid() -> str:
-        """
-        generate uuid
-        """
-        return str(uuid.uuid4())
+    """
+    generate uuid
+    """
+    return str(uuid.uuid4())
 
 
 class Auth:
@@ -57,5 +57,3 @@ class Auth:
                 return bcrypt.checkpw(password.encode(), hashed)
         except (InvalidRequestError, InvalidRequestError):
             return False
-
-    
