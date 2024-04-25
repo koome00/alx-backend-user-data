@@ -55,7 +55,7 @@ class Auth:
                 user = self._db.find_user_by(email=email)
                 hashed = user.hashed_password
                 return bcrypt.checkpw(password.encode(), hashed)
-        except (InvalidRequestError, InvalidRequestError):
+        except (InvalidRequestError, NoResultFound):
             return False
 
     def create_session(self, email: str) -> str:
@@ -67,5 +67,5 @@ class Auth:
             session_id = _generate_uuid()
             self._db.update_user(user.id, session_id=session_id)
             return session_id
-        except NoResultFound:
+        except (NoResultFound, InvalidRequestError):
             return None
