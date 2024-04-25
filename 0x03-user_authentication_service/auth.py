@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Module 4: Auth
+Module 2: Auth
 """
 import bcrypt
 from db import DB
