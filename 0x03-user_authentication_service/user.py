@@ -2,7 +2,6 @@
 """"
 Module 1: Create a class that creates a db table
 """
-from tkinter.tix import COLUMN
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
 
