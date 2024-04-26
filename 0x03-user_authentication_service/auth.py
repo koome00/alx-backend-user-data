@@ -8,7 +8,7 @@ from user import User
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 import uuid
-from typing import Optional
+from typing import Optional, Union
 
 
 def _hash_password(password: str) -> bytes:
@@ -59,7 +59,7 @@ class Auth:
         except (InvalidRequestError, NoResultFound):
             return False
 
-    def create_session(self, email: str) -> Optional[str]:
+    def create_session(self, email: str) -> Union[str, None]:
         """
         creates session ID and returns a string
         """
