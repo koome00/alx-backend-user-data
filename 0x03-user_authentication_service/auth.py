@@ -8,6 +8,7 @@ from user import User
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 import uuid
+from typing import Optional
 
 
 def _hash_password(password: str) -> bytes:
@@ -58,12 +59,12 @@ class Auth:
         except (InvalidRequestError, NoResultFound):
             return False
 
-    def create_session(self, email: str) -> str:
+    def create_session(self, email: str) -> Optional[str]:
         """
         creates session ID and returns a string
         """
         try:
-            user = self._db.find_user_by(email=email)
+            user = self._db.find_user_by(email)
             session_id = _generate_uuid()
             self._db.update_user(user.id, session_id=session_id)
             return session_id
