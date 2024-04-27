@@ -66,4 +66,4 @@ class DB:
             if key not in user.__table__.columns.keys():
                 raise ValueError
             setattr(user, key, value)
-        self._session.commit()
+            self._session.commit()
