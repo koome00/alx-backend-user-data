@@ -94,6 +94,8 @@ class Auth:
         """
         reset token
         """
+        if email is None:
+            raise ValueError
         user = self._db.find_user_by(email=email)
         if user is not None:
             reset_token = _generate_uuid()
