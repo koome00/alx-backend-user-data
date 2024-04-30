@@ -58,13 +58,11 @@ def log_out():
     session_id = request.cookies.get("session_id")
     if session_id is None:
         abort(403)
-    try:
-        user = AUTH.get_user_from_session_id(session_id)
-        print(user)
-        AUTH.destroy_session(user.id)
-        return redirect(url_for("message"))
-    except NoResultFound:
+    user = AUTH.get_user_from_session_id(session_id)
+    if user is None:
         abort(403)
+    AUTH.destroy_session(user.id)
+    return redirect(url_for("message"))
 
 
 @app.route("/profile", methods=["GET"], strict_slashes=False)
@@ -79,6 +77,20 @@ def profile():
     if user is None:
         abort(403)
     return jsonify({"email": user.email}), 200
+
+
+@app.route("/reset_password", methods=["POST"], strict_slashes=False)
+def get_reset_password_token():
+    """
+    """
+    email = request.form.get("email")
+    if email is None:
+        abort(403)
+    try:
+        reset_token = AUTH.get_reset_password_token(email)
+        return jsonify({"email": email, "reset_token": token})    
+    except ValueError:
+        abort(403)
 
 
 if __name__ == "__main__":
